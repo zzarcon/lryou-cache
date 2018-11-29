@@ -14,7 +14,7 @@ export class LRUCache<K,V> {
   }
 
   set(key: K, value: V) {
-    if (this.cache.size >= this.limit) {
+    if (this.cache.size >= this.limit && this.oldest) {
       this.cache.delete(this.oldest.value);
       this.oldest = this.oldest.next;
     }
@@ -25,7 +25,7 @@ export class LRUCache<K,V> {
       };
     } else {
       let current = this.oldest;
-      let newest: CacheNode<K>;
+      let newest: CacheNode<K> | undefined;
 
       while (current.next) {
         current = current.next;
